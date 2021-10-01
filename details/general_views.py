@@ -15,7 +15,7 @@ def general_details_home(request):
     context = {
         "details": details,
     }
-    return render(request, "details/general_details_view.html", context=context)
+    return render(request, "general_details/general_details_view.html", context=context)
 
 
 @login_required
@@ -34,4 +34,4 @@ def general_details_edit(request):
             return redirect('general-details-home')
         messages.error(request, form.errors)
     form = GeneralDetailsEditForm(instance=details)
-    return render(request, "details/general_details_edit_view.html", {"form": form})
+    return render(request, "general_details/general_details_edit_view.html", {"form": form})
