@@ -1,0 +1,62 @@
+{% extends 'common/layout.html' %}
+{% load static %}
+
+{% block breadnav %}
+{% if user.is_authenticated %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">General Details</li>
+    </ol>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div style="display:flex;">
+    <h2 class="mb-5" style="flex:1;">General Details</h2>
+    {% if details %}
+    <div>
+        <a class="btn btn-primary" href="{% url 'general-details-edit' %}">Edit</a>
+    </div>
+    {% endif %}
+</div>
+{% if details %}
+
+<div>
+    <img src="{{ details.image.url }}" style="max-width:150px;" class="mb-2">
+    <p class="pre ml-3" style="font-size: 18px;"><i>"{{ details.bio }}"</i></p>
+</div>
+<table class="table table-striped">
+    <tr>
+        <td>Name</td>
+        <td>{{ details.name }}</td>
+    </tr>
+    <tr>
+        <td>Mobile</td>
+        <td>{{ details.mobile }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{% if details.email %}{{ details.email }}{% endif %}</td>
+    </tr>
+    <tr>
+        <td>Date Of Birth</td>
+        <td>{{ details.dob }}</td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td class="pre">{{ details.address }}</td>
+    </tr>
+</table>
+
+{% else %}
+
+Details not available!<br>
+
+<a class="btn btn-primary mt-3" href="{% url 'general-details-edit' %}">Edit General Details</a>
+
+{% endif %}
+
+{% endblock %}

@@ -1,5 +1,6 @@
 .idea
 venv
+media/user_images
 
 .env
 *.pyc

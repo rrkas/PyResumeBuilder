@@ -1,0 +1,30 @@
+a { text-decoration: none; }
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
+.body-container{
+    padding-top: 70px;
+}
+.content-section{
+    background: #ffffff;
+    padding: 10px 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.pre{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.menu-item-box{
+    display:block;
+}
+.menu-item-img{
+    margin:auto;
+    height:80px;
+    width:80px;
+}
+.menu-item-name{
+    margin:auto;
+}

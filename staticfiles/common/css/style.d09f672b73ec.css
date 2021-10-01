@@ -1,0 +1,17 @@
+a { text-decoration: none; }
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
+.body-container{
+    padding-top: 70px;
+}
+.menu-item-box{
+    background-color:#fefefe;
+    border-radius:10px;
+    text-align:center;
+    padding:8px;
+}
+.menu-item-name{
+    margin:auto;
+}

@@ -14,7 +14,7 @@ PHONE_NUMBER_REGEX = r"\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = token_hex(24)
+SECRET_KEY = "078ab587141de3703b6a57076c932baab9dd4dc656234333cc41c548a3c66451" #token_hex(24)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -24,12 +24,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "crispy_forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "common",
+    "details",
 ]
 
 MIDDLEWARE = [
@@ -41,6 +44,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = ['common.admin.EmailBackend']
 
 ROOT_URLCONF = "resume_builder.urls"
 

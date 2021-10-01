@@ -1,0 +1,41 @@
+{% extends 'common/layout.html' %}
+{% load static %}
+
+{% block breadnav %}
+{% if user.is_authenticated %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-5">Advanced Resume Builder</h1>
+
+{% if user.is_authenticated %}
+
+
+
+<div class="row">
+    {% for menu in menus %}
+    <div class="col-md-3 col-sm-6 mb-3">
+        <a href="{% url menu.url_name %}">
+            <div class="menu-item-box">
+                <img src="{% static menu.image_name %}" alt="" class="menu-item-img mb-2">
+                <div class="menu-item-name">{{ menu.menu_name }}</div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<p>
+    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+</p>
+{% endif %}
+
+{% endblock %}
