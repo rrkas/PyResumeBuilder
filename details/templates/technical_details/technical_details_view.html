@@ -1,0 +1,74 @@
+{% extends 'common/layout.html' %}
+{% load static %}
+
+{% block breadnav %}
+{% if user.is_authenticated %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Technical Details</li>
+    </ol>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-5">
+    <div style="display:flex;">
+        <h2 style="flex:1;">Technical Details</h2>
+        {% if details %}
+        <div>
+            <a class="btn btn-primary" href="{% url 'technical-details-edit' %}">Edit</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% if details %}
+
+<table class="table table-striped">
+    {% for link in details.links %}
+    <tr>
+        <td>{{ link.name }}</td>
+        <td><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<hr>
+
+<h2>Extra Links</h2>
+<table class="table table-striped">
+    {% for link in details.extra_links %}
+    <tr>
+        <td>{{ link.name }}</td>
+        <td><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></td>
+        <td>
+            <a class="btn btn-primary" href="{% url 'technical-details-extra-url-edit' index=link.index %}">Edit</a>
+        </td>
+        <td>
+            <form method="post"
+                  action="{% url 'technical-details-extra-url-delete' index=link.index %}"
+                  style="padding:0px;margin:0px;">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<div style="flex:1;">
+    <a class="btn btn-success" href="{% url 'technical-details-extra-url-new' %}">Add an extra link</a>
+</div>
+
+{% else %}
+
+Details not available!<br>
+
+<a class="btn btn-primary mt-3" href="{% url 'technical-details-edit' %}">Fill Technical Details</a>
+
+{% endif %}
+
+{% endblock %}

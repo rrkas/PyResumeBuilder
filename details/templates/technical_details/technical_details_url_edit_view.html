@@ -1,0 +1,42 @@
+{% extends 'common/layout.html' %}
+{% load static %}
+
+{% block breadnav %}
+{% if user.is_authenticated %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/">Home</a></li>
+        <li class="breadcrumb-item" aria-current="page">
+            <a href="{% url 'technical-details-home' %}">Technical Details</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            {% if form.edit %}Edit{% else %}New{% endif %} Extra Link {% if form.edit %}{{ link.index }}{% endif %}
+        </li>
+    </ol>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Extra Link</legend>
+            {{ form | crispy }}
+        </fieldset>
+        <div class="form-group">
+            <a class="btn btn-secondary" href="{% url 'technical-details-home' %}">Cancel</a>
+            <button class="btn btn-{% if form.edit %}info{% else %}success{% endif %}" type="submit">
+                {% if form.edit %}Update{% else %}Create{% endif %}
+            </button>
+            {% if form.edit %}
+            <button class="btn btn-danger">Delete</button>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+{% endblock %}

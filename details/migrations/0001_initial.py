@@ -16,16 +16,43 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='GeneralDetails',
+            name="GeneralDetails",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('Image', models.ImageField(upload_to='user_images')),
-                ('Name', models.CharField(max_length=120)),
-                ('Date of Birth', models.DateField()),
-                ('Address', models.TextField()),
-                ('Mobile', models.CharField(help_text='Format: +(1-3) (9-13)', max_length=20, unique=True, validators=[django.core.validators.RegexValidator('\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]\\\n|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1) \\d{1,14}$', 'Invalid format! Format: +(1-3) (9-13)')])),
-                ('Bio', models.TextField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("Image", models.ImageField(upload_to="user_images")),
+                ("Name", models.CharField(max_length=120)),
+                ("Date of Birth", models.DateField()),
+                ("Address", models.TextField()),
+                (
+                    "Mobile",
+                    models.CharField(
+                        help_text="Format: +(1-3) (9-13)",
+                        max_length=20,
+                        unique=True,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                "\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]\\\n|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1) \\d{1,14}$",
+                                "Invalid format! Format: +(1-3) (9-13)",
+                            )
+                        ],
+                    ),
+                ),
+                ("Bio", models.TextField()),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

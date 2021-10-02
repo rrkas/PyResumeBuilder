@@ -1,7 +1,4 @@
-a {
-    text-decoration: none;
-    word-break: break-word;
-}
+a { text-decoration: none; }
 a:link { text-decoration: none; }
 a:visited { text-decoration: none; }
 a:hover { text-decoration: none; }
@@ -25,11 +22,12 @@ a:active { text-decoration: none; }
     border:solid #efefef 2px;
     border-radius:10px;
     text-align:center;
-    padding-top:25px;
-    padding-bottom:25px;
+    padding:15px;
+    height: 200px;
 }
 .menu-item-img{
     height:70px;
+    width:70px;
 }
 .menu-item-name{
     text-align: center;

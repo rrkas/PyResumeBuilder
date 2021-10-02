@@ -2,7 +2,9 @@
 
 ## User Details
 - [x] general details  
-- [ ] technical details  
+- [x] technical details 
+  - [x] website, github, linkedin, credly 
+  - [x] extra links
 - [ ] education  
 - [ ] experience  
 - [ ] skills

@@ -6,26 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('details', '0002_alter_generaldetails_user'),
+        ("details", "0002_alter_generaldetails_user"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='generaldetails',
-            name='Date of Birth',
+            model_name="generaldetails",
+            name="Date of Birth",
         ),
         migrations.RemoveField(
-            model_name='generaldetails',
-            name='Image',
+            model_name="generaldetails",
+            name="Image",
         ),
         migrations.AddField(
-            model_name='generaldetails',
-            name='dob',
-            field=models.DateField(null=True, verbose_name='Date of Birth'),
+            model_name="generaldetails",
+            name="dob",
+            field=models.DateField(null=True, verbose_name="Date of Birth"),
         ),
         migrations.AddField(
-            model_name='generaldetails',
-            name='image',
-            field=models.ImageField(null=True, upload_to='user_images', verbose_name='Image'),
+            model_name="generaldetails",
+            name="image",
+            field=models.ImageField(
+                null=True, upload_to="user_images", verbose_name="Image"
+            ),
         ),
     ]

@@ -12,7 +12,11 @@ urlpatterns = [
 # user specific
 urlpatterns += [
     path("register/", user_views.register, name="register"),
-    path("login/", user_views.EmailLoginView.as_view(template_name="users/login.html"), name="login"),
+    path(
+        "login/",
+        user_views.EmailLoginView.as_view(template_name="users/login.html"),
+        name="login",
+    ),
     path(
         "logout/",
         auth_views.LogoutView.as_view(template_name="users/logout.html"),
@@ -20,9 +24,7 @@ urlpatterns += [
     ),
     path(
         "password-reset/",
-        auth_views.PasswordResetView.as_view(
-            template_name="users/password_reset.html"
-        ),
+        auth_views.PasswordResetView.as_view(template_name="users/password_reset.html"),
         name="password_reset",
     ),
     path(

@@ -31,7 +31,9 @@ def general_details_edit(request):
             if not details.user:
                 details.user = request.user
             details.save()
-            return redirect('general-details-home')
-        messages.error(request, form.errors)
+            return redirect("general-details-home")
+        messages.error(request, form.errors, extra_tags="danger")
     form = GeneralDetailsEditForm(instance=details)
-    return render(request, "general_details/general_details_edit_view.html", {"form": form})
+    return render(
+        request, "general_details/general_details_edit_view.html", {"form": form}
+    )
