@@ -5,14 +5,14 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 
 from details.forms import TechnicalDetailsEditForm, TechnicalDetailsExtraURLsEditForm
-from details.models import TechnicalDetails, TechnicalDetailsExtraURL
+from details.models import TechnicalDetail, TechnicalDetailsExtraURL
 
 
 @login_required
 def technical_details_home(request):
     try:
-        details = TechnicalDetails.objects.get(user=request.user)
-    except TechnicalDetails.DoesNotExist:
+        details = TechnicalDetail.objects.get(user=request.user)
+    except TechnicalDetail.DoesNotExist:
         details = None
     context = {
         "details": details,
@@ -25,8 +25,8 @@ def technical_details_home(request):
 @login_required
 def technical_details_edit(request):
     try:
-        details = TechnicalDetails.objects.get(user=request.user)
-    except TechnicalDetails.DoesNotExist:
+        details = TechnicalDetail.objects.get(user=request.user)
+    except TechnicalDetail.DoesNotExist:
         details = None
     if request.method == "POST":
         form = TechnicalDetailsEditForm(request.POST, instance=details)
@@ -69,7 +69,7 @@ def technical_details_url_new(request):
 def technical_details_url_edit(request, index):
     try:
         url = TechnicalDetailsExtraURL.objects.filter(user=request.user)[index - 1]
-    except TechnicalDetails.DoesNotExist:
+    except TechnicalDetail.DoesNotExist:
         url = None
     except IndexError:
         raise Http404
@@ -95,7 +95,7 @@ def technical_details_url_edit(request, index):
 def technical_details_url_delete(request, index):
     try:
         url = TechnicalDetailsExtraURL.objects.filter(user=request.user)[index - 1]
-    except TechnicalDetails.DoesNotExist:
+    except TechnicalDetail.DoesNotExist:
         url = None
     except IndexError:
         raise Http404

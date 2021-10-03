@@ -1,0 +1,64 @@
+{% extends 'common/layout.html' %}
+{% load static %}
+
+{% block breadnav %}
+{% if user.is_authenticated %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Educational Details</li>
+    </ol>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-5">
+    <div style="display:flex;">
+        <div style="flex:1;">
+            <h2 style="padding-top:18px;">Educational Details</h2>
+        </div>
+        <div>
+            <a class="btn btn-primary mt-3" href="{% url 'educational-details-new' %}">Add Educational Details</a>
+        </div>
+    </div>
+</div>
+{% if details %}
+
+<div class="row">
+    {% for detail in details %}
+    <div class="col-md-12">
+        <div class="content-section row">
+            <div class="col-md-8 col-sm-12">
+                <h5>{{ detail.institute_name }}</h5>
+                <p>{{ detail.institute_address }}</p>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="float-md-right float-sm-left">
+                    {% if detail.year_of_admission %}
+                    {{ detail.year_of_admission }} -
+                    {% endif %}
+                    <b>{{ detail.year_of_passing }}</b>
+                </div><br>
+                <div class="float-md-right float-sm-left">
+                    {% if detail.percentage %}
+                    <b>{{ detail.percentage }}</b> %
+                    {% else %}
+                    CGPA: <b>{{ detail.cgpa }}</b> / 10.00 (<b>{{ detail.cgpa_percentage }}</b> %)
+                    {% endif %}
+                </div><br>
+                <div class="float-md-right float-sm-left">{{ detail.major_subject }}</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+
+No details yet!
+
+{% endif %}
+
+{% endblock %}

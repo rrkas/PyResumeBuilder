@@ -3,14 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from details.forms import GeneralDetailsEditForm
-from details.models import GeneralDetails
+from details.models import GeneralDetail
 
 
 @login_required
 def general_details_home(request):
     try:
-        details = GeneralDetails.objects.get(user=request.user)
-    except GeneralDetails.DoesNotExist:
+        details = GeneralDetail.objects.get(user=request.user)
+    except GeneralDetail.DoesNotExist:
         details = None
     context = {
         "details": details,
@@ -21,8 +21,8 @@ def general_details_home(request):
 @login_required
 def general_details_edit(request):
     try:
-        details = GeneralDetails.objects.get(user=request.user)
-    except GeneralDetails.DoesNotExist:
+        details = GeneralDetail.objects.get(user=request.user)
+    except GeneralDetail.DoesNotExist:
         details = None
     if request.method == "POST":
         form = GeneralDetailsEditForm(request.POST, request.FILES, instance=details)

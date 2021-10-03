@@ -1,11 +1,16 @@
 import django.forms as forms
 
-from details.models import GeneralDetails, TechnicalDetails, TechnicalDetailsExtraURL
+from details.models import (
+    GeneralDetail,
+    TechnicalDetail,
+    TechnicalDetailsExtraURL,
+    EducationalDetail,
+)
 
 
 class GeneralDetailsEditForm(forms.ModelForm):
     class Meta:
-        model = GeneralDetails
+        model = GeneralDetail
         exclude = ["user"]
         widgets = {
             "dob": forms.DateInput(attrs={"type": "date"}),
@@ -28,7 +33,7 @@ class GeneralDetailsEditForm(forms.ModelForm):
 
 class TechnicalDetailsEditForm(forms.ModelForm):
     class Meta:
-        model = TechnicalDetails
+        model = TechnicalDetail
         exclude = ["user"]
         widgets = {}
 
@@ -47,3 +52,23 @@ class TechnicalDetailsExtraURLsEditForm(forms.ModelForm):
     def __init__(self, edit=True, *args, **kwargs):
         super(TechnicalDetailsExtraURLsEditForm, self).__init__(*args, **kwargs)
         self.edit = edit
+
+
+class EducationalDetailsEditForm(forms.ModelForm):
+    class Meta:
+        model = EducationalDetail
+        exclude = ["user"]
+        widgets = {}
+
+    def __init__(self, edit=True, *args, **kwargs):
+        non_required_fields = [
+            "institute_address",
+            "year_of_admission",
+            "percentage",
+            "cgpa",
+            "major_subject",
+        ]
+        super(EducationalDetailsEditForm, self).__init__(*args, **kwargs)
+        for field in non_required_fields:
+            if field in self.fields:
+                self.fields[field].required = False

@@ -16,6 +16,11 @@ def home(request):
                 url_name="technical-details-home",
                 menu_name="Technical Details",
             ),
+            HomeMenuItem(
+                image_name="educational_details.png",
+                url_name="educational-details-home",
+                menu_name="Educational Details",
+            ),
         ]
     }
     return render(request, "common/home.html", context=context)
