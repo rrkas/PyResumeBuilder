@@ -9,7 +9,7 @@
         <li class="breadcrumb-item" aria-current="page">
             <a href="{% url 'educational-details-home' %}">Educational Details</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">{% if edit %}Edit{% else %}New{% endif %}</li>
+        <li class="breadcrumb-item active" aria-current="page">{% if form.edit %}Edit{% else %}New{% endif %}</li>
     </ol>
 </nav>
 {% endif %}
@@ -17,7 +17,6 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
-
 <div class="content-section">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -27,8 +26,8 @@
         </fieldset>
         <div class="form-group">
             <a class="btn btn-secondary" href="{% url 'educational-details-home' %}">Cancel</a>
-            <button class="btn btn-{% if edit %}info{% else %}success{% endif %}" type="submit">
-                {% if edit %}Update{% else %}Create{% endif %}
+            <button class="btn btn-{% if form.edit %}info{% else %}success{% endif %}" type="submit">
+                {% if form.edit %}Update{% else %}Create{% endif %}
             </button>
         </div>
     </form>

@@ -40,15 +40,30 @@
                     {{ detail.year_of_admission }} -
                     {% endif %}
                     <b>{{ detail.year_of_passing }}</b>
-                </div><br>
+                </div>
+                <br>
                 <div class="float-md-right float-sm-left">
                     {% if detail.percentage %}
                     <b>{{ detail.percentage }}</b> %
                     {% else %}
                     CGPA: <b>{{ detail.cgpa }}</b> / 10.00 (<b>{{ detail.cgpa_percentage }}</b> %)
                     {% endif %}
-                </div><br>
+                </div>
+                <br>
                 <div class="float-md-right float-sm-left">{{ detail.major_subject }}</div>
+            </div>
+            <div class="col-12 mt-sm-2">
+                <a class="btn btn-info float-md-left"
+                   href="{% url 'educational-details-edit' index=detail.index %}">Edit</a>
+                <form method="post"
+                      class="ml-2 float-md-left float-sm-right"
+                      action="{% url 'educational-details-delete' index=detail.index %}"
+                      style="padding:0px;margin:0px;">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit"
+                            onclick="return confirm('Are you sure?');">Delete
+                    </button>
+                </form>
             </div>
         </div>
     </div>

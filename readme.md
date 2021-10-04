@@ -5,7 +5,7 @@
 - [x] technical details 
   - [x] website, github, linkedin, credly 
   - [x] extra links
-- [ ] education  
+- [x] educational details  
 - [ ] experience  
 - [ ] skills
 

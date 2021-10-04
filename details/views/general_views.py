@@ -32,6 +32,9 @@ def general_details_edit(request):
                 details.user = request.user
             details.save()
             return redirect("general-details-home")
+        if "__all__" in form.errors:
+            form.errors["Others"] = form.errors["__all__"]
+            del form.errors["__all__"]
         messages.error(request, form.errors, extra_tags="danger")
     form = GeneralDetailsEditForm(instance=details)
     return render(

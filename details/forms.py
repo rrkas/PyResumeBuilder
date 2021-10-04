@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy
 import django.forms as forms
 
 from details.models import (
@@ -72,3 +73,4 @@ class EducationalDetailsEditForm(forms.ModelForm):
         for field in non_required_fields:
             if field in self.fields:
                 self.fields[field].required = False
+        self.edit = edit

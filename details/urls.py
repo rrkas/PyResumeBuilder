@@ -52,4 +52,14 @@ urlpatterns += [
         educational_views.education_details_new,
         name="educational-details-new",
     ),
+    path(
+        "educational/<int:index>/edit",
+        educational_views.education_details_edit,
+        name="educational-details-edit",
+    ),
+    path(
+        "educational/<int:index>/delete",
+        educational_views.education_details_delete,
+        name="educational-details-delete",
+    ),
 ]

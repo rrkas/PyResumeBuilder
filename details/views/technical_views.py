@@ -36,6 +36,9 @@ def technical_details_edit(request):
                 details.user = request.user
             details.save()
             return redirect("technical-details-home")
+        if "__all__" in form.errors:
+            form.errors["Others"] = form.errors["__all__"]
+            del form.errors["__all__"]
         messages.error(request, form.errors, extra_tags="danger")
     form = TechnicalDetailsEditForm(instance=details)
     return render(
@@ -56,6 +59,9 @@ def technical_details_url_new(request):
                 url.user = request.user
             url.save()
             return redirect("technical-details-home")
+        if "__all__" in form.errors:
+            form.errors["Others"] = form.errors["__all__"]
+            del form.errors["__all__"]
         messages.error(request, form.errors, extra_tags="danger")
     form = TechnicalDetailsExtraURLsEditForm(False)
     return render(
@@ -74,13 +80,13 @@ def technical_details_url_edit(request, index):
     except IndexError:
         raise Http404
     if request.method == "POST":
-        print("form received!")
-        print(request.POST)
         form = TechnicalDetailsExtraURLsEditForm(True, request.POST, instance=url)
         if form.is_valid():
             form.save()
-            print("URL saved!")
             return redirect("technical-details-home")
+        if "__all__" in form.errors:
+            form.errors["Others"] = form.errors["__all__"]
+            del form.errors["__all__"]
         messages.error(request, form.errors, extra_tags="danger")
     form = TechnicalDetailsExtraURLsEditForm(instance=url)
     return render(

@@ -44,19 +44,10 @@ class TechnicalDetail(models.Model):
 
     @property
     def extra_links(self):
-        class Temp:
-            count = 1
-
-            def __init__(self, name, url):
-                self.name = name
-                self.url = url
-                self.index = Temp.count
-                Temp.count += 1
-
-        return [
-            Temp(link.name, link.url)
-            for link in TechnicalDetailsExtraURL.objects.filter(user=self.user)
-        ]
+        links = TechnicalDetailsExtraURL.objects.filter(user=self.user)
+        for i, link in enumerate(links):
+            link.__setattr__("index", i + 1)
+        return links
 
     @property
     def links(self):
@@ -125,12 +116,14 @@ class EducationalDetail(models.Model):
     @property
     def cgpa_percentage(self):
         if self.cgpa:
-            return float(self.cgpa) * 9.5
+            return round(float(self.cgpa) * 9.5, 2)
 
     def clean(self):
         super(EducationalDetail, self).clean()
         if self.percentage is None and self.cgpa is None:
             raise ValidationError("Percentage and CGPA both null!")
+        elif self.percentage is not None and self.cgpa is not None:
+            raise ValidationError("Percentage and CGPA both not null!")
 
     def __repr__(self):
         return f"{self.user.email} - {self.educational_level}"
