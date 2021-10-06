@@ -190,3 +190,28 @@ class ExperienceItem(models.Model):
         skills = list(map(lambda x: x.strip(), str(self.skills).split(";")))
         skills = [skills[::2], skills[1::2]]
         return skills
+
+
+# many for each user
+class SkillItem(models.Model):
+    skill_level_choices = (
+        (1, "Poor"),
+        (2, "Average"),
+        (3, "Good"),
+        (4, "Very Good"),
+        (5, "Expert"),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+    skill_name = models.CharField(max_length=120, verbose_name="Skill Name")
+    skill_level = models.IntegerField(
+        choices=skill_level_choices,
+        verbose_name="Skill Level",
+        default=3,
+    )
+
+    def skill_map(self):
+        t = [int(i <= self.skill_level) for i, _ in SkillItem.skill_level_choices]
+        print(t)
+        return t

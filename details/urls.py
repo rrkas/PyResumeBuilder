@@ -1,6 +1,12 @@
 from django.urls import path
 
-from .views import general_views, technical_views, educational_views, experience_views
+from .views import (
+    general_views,
+    technical_views,
+    educational_views,
+    experience_views,
+    skills_views,
+)
 
 # general
 urlpatterns = [
@@ -90,5 +96,29 @@ urlpatterns += [
         "experience/<str:email>/<int:index>/doc",
         experience_views.experience_doc,
         name="experience-doc",
+    ),
+]
+
+# skills
+urlpatterns += [
+    path(
+        "skills/",
+        skills_views.skills_home,
+        name="skills-home",
+    ),
+    path(
+        "skills/new",
+        skills_views.skills_new,
+        name="skills-new",
+    ),
+    path(
+        "skills/<int:index>/edit",
+        skills_views.skills_edit,
+        name="skills-edit",
+    ),
+    path(
+        "skills/<int:index>/delete",
+        skills_views.skills_delete,
+        name="skills-delete",
     ),
 ]

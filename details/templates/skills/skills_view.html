@@ -1,0 +1,68 @@
+{% extends 'common/layout.html' %}
+{% load static %}
+
+{% block breadnav %}
+{% if user.is_authenticated %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Skills</li>
+    </ol>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-5">
+    <div style="display:flex;">
+        <div style="flex:1;">
+            <h2 style="padding-top:18px;">Skills</h2>
+        </div>
+        <div>
+            <a class="btn btn-primary mt-3" href="{% url 'skills-new' %}">Add Skill</a>
+        </div>
+    </div>
+</div>
+{% if skills %}
+
+<div class="row">
+    {% for skill in skills %}
+    <div class="col-md-12">
+        <div class="content-section row">
+            <div class="col-12 col-md-10">
+                <div style="display:flex;">
+                    <h4 style="flex:1;margin-top:5px;">{{ skill.skill_name }}</h4>
+                    {% for level in skill.skill_map %}
+                    <span class="mr-1" style="font-size:25px;">
+                        {% if level %}<span style="color:green;">★</span>{% else %}☆{% endif %}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-12 col-md-2">
+                <hr class="d-md-none">
+                <a class="btn btn-info float-md-left"
+                   href="{% url 'skills-edit' index=skill.index %}">Edit</a>
+                <form method="post"
+                      class="ml-2 float-md-left float-sm-right"
+                      action="{% url 'skills-delete' index=skill.index %}"
+                      style="padding:0px;margin:0px;">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit"
+                            onclick="return confirm('Are you sure?');">Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+
+No skills yet!
+
+{% endif %}
+
+{% endblock %}

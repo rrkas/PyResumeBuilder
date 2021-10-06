@@ -6,6 +6,7 @@ from details.models import (
     TechnicalDetailsExtraURL,
     EducationalDetail,
     ExperienceItem,
+    SkillItem,
 )
 
 
@@ -105,6 +106,21 @@ class ExperienceItemEditForm(forms.ModelForm):
             "document_url",
         ]
         super(ExperienceItemEditForm, self).__init__(*args, **kwargs)
+        for field in non_required_fields:
+            if field in self.fields:
+                self.fields[field].required = False
+        self.edit = edit
+
+
+class SkillsItemEditForm(forms.ModelForm):
+    class Meta:
+        model = SkillItem
+        exclude = ["user"]
+        widgets = {}
+
+    def __init__(self, edit=True, *args, **kwargs):
+        non_required_fields = []
+        super(SkillsItemEditForm, self).__init__(*args, **kwargs)
         for field in non_required_fields:
             if field in self.fields:
                 self.fields[field].required = False

@@ -26,6 +26,11 @@ def home(request):
                 url_name="experience-home",
                 menu_name="Experience",
             ),
+            HomeMenuItem(
+                image_name="skills.png",
+                url_name="skills-home",
+                menu_name="Skills",
+            ),
         ]
     }
     return render(request, "common/home.html", context=context)
