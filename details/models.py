@@ -24,7 +24,6 @@ class GeneralDetail(models.Model):
             )
         ],
         help_text="Format: +(1-3) (9-13)",
-        unique=True,
         verbose_name="Mobile",
     )
 
@@ -131,3 +130,63 @@ class EducationalDetail(models.Model):
     def __str__(self):
         # shows in admin.site
         return f"{self.pk} : {self.user.email} - {self.educational_level}"
+
+
+# many for each user
+class ExperienceItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+    experience_type = models.CharField(
+        verbose_name="Type",
+        max_length=20,
+        choices=(
+            ("job", "Job"),
+            ("internship", "Internship"),
+        ),
+        default="job",
+    )
+
+    start_date = models.DateField(verbose_name="Start Date")
+    end_date = models.DateField(verbose_name="End Date", null=True)
+
+    institute_name = models.CharField(max_length=150, verbose_name="Institute Name")
+    institute_address = models.CharField(
+        max_length=150, verbose_name="Institute Address", null=True
+    )
+
+    reference_person_name = models.CharField(
+        verbose_name="Reference Person Name",
+        max_length=100,
+        null=True,
+    )
+    reference_person_mobile = models.CharField(
+        max_length=20,
+        validators=[
+            RegexValidator(
+                project_settings.PHONE_NUMBER_REGEX,
+                "Invalid format! Format: +(1-3) (9-13)",
+            )
+        ],
+        help_text="Format: +(1-3) (9-13)",
+        verbose_name="Reference Person Mobile",
+    )
+
+    skills = models.TextField(verbose_name="Skills", null=True)
+
+    document_url = models.URLField(
+        verbose_name="Document URL",
+        null=True,
+    )
+
+    def clean(self):
+        super().clean()
+        if (
+            len(self.reference_person_mobile or "") != 0
+            and len(self.reference_person_name or "") == 0
+        ):
+            raise ValidationError("Reference person mobile without name!")
+
+    def skill_list(self):
+        skills = list(map(lambda x: x.strip(), str(self.skills).split(";")))
+        skills = [skills[::2], skills[1::2]]
+        return skills

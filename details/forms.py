@@ -1,4 +1,3 @@
-from django.utils.translation import ugettext_lazy
 import django.forms as forms
 
 from details.models import (
@@ -6,7 +5,12 @@ from details.models import (
     TechnicalDetail,
     TechnicalDetailsExtraURL,
     EducationalDetail,
+    ExperienceItem,
 )
+
+
+def date_input():
+    return forms.DateInput(attrs={"type": "date"})
 
 
 class GeneralDetailsEditForm(forms.ModelForm):
@@ -14,7 +18,7 @@ class GeneralDetailsEditForm(forms.ModelForm):
         model = GeneralDetail
         exclude = ["user"]
         widgets = {
-            "dob": forms.DateInput(attrs={"type": "date"}),
+            "dob": date_input(),
             "address": forms.Textarea(
                 attrs={
                     "rows": 3,
@@ -70,6 +74,37 @@ class EducationalDetailsEditForm(forms.ModelForm):
             "major_subject",
         ]
         super(EducationalDetailsEditForm, self).__init__(*args, **kwargs)
+        for field in non_required_fields:
+            if field in self.fields:
+                self.fields[field].required = False
+        self.edit = edit
+
+
+class ExperienceItemEditForm(forms.ModelForm):
+    class Meta:
+        model = ExperienceItem
+        exclude = ["user"]
+        widgets = {
+            "start_date": date_input(),
+            "end_date": date_input(),
+            "skills": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "placeholder": "C; C++; Communication...\nSeparate skills by semicolon ( ; )",
+                }
+            ),
+        }
+
+    def __init__(self, edit=True, *args, **kwargs):
+        non_required_fields = [
+            "end_date",
+            "institute_address",
+            "reference_person_name",
+            "reference_person_mobile",
+            "skills",
+            "document_url",
+        ]
+        super(ExperienceItemEditForm, self).__init__(*args, **kwargs)
         for field in non_required_fields:
             if field in self.fields:
                 self.fields[field].required = False

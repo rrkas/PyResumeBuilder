@@ -6,7 +6,7 @@
   - [x] website, github, linkedin, credly 
   - [x] extra links
 - [x] educational details  
-- [ ] experience  
+- [x] experience  
 - [ ] skills
 
 ## Features

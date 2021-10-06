@@ -1,0 +1,115 @@
+{% extends 'common/layout.html' %}
+{% load static %}
+
+{% block breadnav %}
+{% if user.is_authenticated %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Experience</li>
+    </ol>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-5">
+    <div style="display:flex;">
+        <div style="flex:1;">
+            <h2 style="padding-top:18px;">Experience</h2>
+        </div>
+        <div>
+            <a class="btn btn-primary mt-3" href="{% url 'experience-new' %}">Add Experience</a>
+        </div>
+    </div>
+</div>
+{% if experience %}
+
+<div class="row">
+    {% for experience_item in experience %}
+    <div class="col-md-12">
+        <div class="content-section row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <h5>{{ experience_item.institute_name }}</h5>
+                        {% if experience_item.institute_address %}
+                        <p>{{ experience_item.institute_address }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <hr class="d-md-none">
+                        <div class="float-md-right float-sm-left">
+                            {{ experience_item.start_date }}
+                            {% if experience_item.end_date %}
+                            - {{ experience_item.end_date }}
+                            {% endif %}
+                        </div>
+                        <br>
+                        <div class="float-md-right float-sm-left">
+                            {{ experience_item.get_experience_type_display }}
+                        </div>
+                        {% if experience_item.document_url %}
+                        <br>
+                        <div class="float-md-right float-sm-left">
+                            <a href="{{ experience_item.document_url }}" target="_blank">
+                                Document
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                {% if experience_item.reference_person_name %}
+                <hr>
+                <p>
+                    Reference: <b>{{ experience_item.reference_person_name }}</b>
+                    {% if experience_item.reference_person_mobile %}
+                    (<a href="tel:{{ experience_item.reference_person_mobile }}" target="_blank">
+                    {{ experience_item.reference_person_mobile }}
+                </a>)
+                    {% endif %}
+                </p>
+                {% endif %}
+                {% if experience_item.skills %}
+                <hr>
+                <div style="font-size:17;"><b>Skills</b></div>
+                <div class="row">
+                    {% for skill_sublist in experience_item.skill_list %}
+                    <div class="col-md-6">
+                        {% for skill in skill_sublist %}
+                        {{ skill }}<br>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <hr>
+            </div>
+            <div class="col-12 mt-sm-2">
+                <a class="btn btn-info float-md-left"
+                   href="{% url 'experience-edit' index=experience_item.index %}">Edit</a>
+                <form method="post"
+                      class="ml-2 float-md-left float-sm-right"
+                      action="{% url 'experience-delete' index=experience_item.index %}"
+                      style="padding:0px;margin:0px;">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit"
+                            onclick="return confirm('Are you sure?');">Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+
+No experience yet!
+
+{% endif %}
+
+{% endblock %}
