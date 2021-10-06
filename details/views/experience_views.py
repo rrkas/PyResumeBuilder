@@ -1,6 +1,9 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.contrib.auth.models import User
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 
@@ -86,3 +89,50 @@ def experience_delete(request, index):
     else:
         messages.error(request, "Error deleting!", extra_tags="danger")
     return redirect("experience-home")
+
+
+def experience_doc(request, email: str, index: int):
+    err = None
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        raise Http404
+    except BaseException as e:
+        print(e)
+        err = e
+        user = None
+    if user:
+        try:
+            exp = ExperienceItem.objects.filter(user=user)
+        except ExperienceItem.DoesNotExist:
+            raise Http404
+        except BaseException as e:
+            print(e)
+            err = e
+            exp = None
+        if exp:
+            if index > len(exp):
+                content = {
+                    "error": f"Index out of bounds: {index}",
+                }
+            else:
+                exp = exp[index - 1]
+                if exp.document_url:
+                    content = {"url": exp.document_url}
+                else:
+                    content = {
+                        "error": f"No document URL in the record: {index}",
+                    }
+        else:
+            content = {"error": "Something went wrong!", "debug": str(err)}
+    else:
+        content = {"error": "Something went wrong!", "debug": str(err)}
+    content.update(
+        {
+            "email": email,
+            "index": index,
+        }
+    )
+    return HttpResponse(
+        content=json.dumps(content, indent=4), content_type="application/json"
+    )

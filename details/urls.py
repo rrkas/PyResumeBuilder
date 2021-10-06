@@ -86,4 +86,9 @@ urlpatterns += [
         experience_views.experience_delete,
         name="experience-delete",
     ),
+    path(
+        "experience/<str:email>/<int:index>/doc",
+        experience_views.experience_doc,
+        name="experience-doc",
+    ),
 ]
